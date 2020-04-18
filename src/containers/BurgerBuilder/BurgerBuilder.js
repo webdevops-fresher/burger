@@ -10,6 +10,7 @@ import ContactData from '../checkout/contactData';
 import axios from '../../axios-orders';
 import {connect} from 'react-redux';
 import * as actionTypes from '../store/actions';
+import * as burgerBuilderActions from '../store/burgerBuilderActions';
 
 
 
@@ -20,8 +21,6 @@ class BurgerBuilder extends Component {
     //     this.state = {...}
     // }
     state = {
-        totalPrice: 4,
-        maximumCustomisable: 0,
         orderNowClicked:false,
         loading:false
     }
@@ -93,7 +92,11 @@ class BurgerBuilder extends Component {
         // const ingredientParamString=ingredientParams.join('&');
         this.props.history.push('/checkout');
     }
- 
+
+
+    componentDidMount(){
+        this.props.fetchIngredients();
+    }
 
     render() {
         const disabledLessButtons = {
@@ -103,23 +106,24 @@ class BurgerBuilder extends Component {
         for (let key in disabledLessButtons) {
             disabledLessButtons[key] = disabledLessButtons[key] <= 0
         }
+        let content=this.props.ings!=null?( <div><Modal show={this.state.orderNowClicked} revertOrder={this.revertOrderHandler}>
+            <OrderSummary ingredients={this.props.ings} cancelOrder={this.revertOrderHandler} 
+            proceedOrder={this.proceedOrderhandler}
+            price={this.state.totalPrice}/>
+        </Modal>
+        <Burger ingredients={this.props.ings} />
+        <BuildControls
+            ingredientAdded={this.props.onIngredientAdded}
+            ingredientsRemoved={this.props.onIngredientRemoved}
+            disabled={disabledLessButtons}
+            price={this.props.price}
+            maximum={this.props.maxim}
+            orderNow={this.orderNowHandler}
+        /></div>):<h1>Loading...</h1>;
 
         return (
             <div>
-                <Modal show={this.state.orderNowClicked} revertOrder={this.revertOrderHandler}>
-                    <OrderSummary ingredients={this.props.ings} cancelOrder={this.revertOrderHandler} 
-                    proceedOrder={this.proceedOrderhandler}
-                    price={this.state.totalPrice}/>
-                </Modal>
-                <Burger ingredients={this.props.ings} />
-                <BuildControls
-                    ingredientAdded={this.props.onIngredientAdded}
-                    ingredientsRemoved={this.props.onIngredientRemoved}
-                    disabled={disabledLessButtons}
-                    price={this.props.price}
-                    maximum={this.props.maxim}
-                    orderNow={this.orderNowHandler}
-                />
+               {content}
             </div>
         );
     }
@@ -136,9 +140,9 @@ const mapStateToProps=state=>{
 
 const mapDispatchToProps=dispatch=>{
     return {
-        onIngredientAdded:(ingName)=>dispatch({type:actionTypes.ADD_INGREDIENT,ingredientName:ingName}),
-        onIngredientRemoved:(ingName)=>dispatch({type:actionTypes.REMOVE_INGREDIENT,ingredientName:ingName}),
-
+        onIngredientAdded:(ingName)=>dispatch(burgerBuilderActions.addIngredient(ingName)),
+        onIngredientRemoved:(ingName)=>dispatch(burgerBuilderActions.removeIngredient(ingName)),
+        fetchIngredients:()=>dispatch(burgerBuilderActions.initIngredients())
     }
 }
 

@@ -12,7 +12,7 @@ class ContactData extends React.Component{
         name:'',
         email:'',
         street:'',
-        postalCode:''
+        postalCode:'',
     }
     orderHandler=(event)=>{
         event.preventDefault();
@@ -65,7 +65,11 @@ class ContactData extends React.Component{
                     value={this.state.postalCode}
                     onChange={this.onInputChanged}
                     />
-                    <button onClick={this.orderHandler}>Order Now</button>
+                    <button 
+                    onClick={this.orderHandler} 
+                    className={classes.Button}
+                    disabled={!(this.state.name!=''&&this.state.email!=''&&this.state.street!=''&&this.state.postalCode!='')}
+                    >Order Now</button>
                 </form>
             </div>
         );

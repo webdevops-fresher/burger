@@ -10,12 +10,7 @@ const INGREDIENTS_PRICES = {
 
 
 const initialState={
-    ingredients:{
-        salad:0,
-        meat:0,
-        bacon:0,
-        cheese:0
-    },
+    ingredients:null,
     totalPrice:4,
     maximumCustomisable:0
 }
@@ -43,6 +38,11 @@ const reducer=(state=initialState,action)=>{
                 maximumCustomisable:state.maximumCustomisable-1
 
 
+            }
+        case actionTypes.INIT_INGREDIENTS:
+            return {
+                ...state,
+                ingredients:action.ingredients
             }
         default:
             return state

@@ -1,5 +1,6 @@
 .ContactData{
     width:80%;
+    margin:auto;
 }
 .Label{
     display:block;
@@ -7,6 +8,18 @@
 .Input{
     display:block;
     border-radius:20px;
+}
+.Button{
+    display:block;
+    border-radius:20px;
+    background:#089280;
+    color:white;
+    background-origin: border-box;
+    border-color: #089280;
+    margin:30px;
+}
+.Button:focus{
+    border-radius:0;
 }
 
 
