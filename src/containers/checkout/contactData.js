@@ -4,6 +4,10 @@ import classes from './contactData.css';
 
 import {connect} from 'react-redux';
 import axios from '../../axios-orders';
+import {withRouter} from 'react-router-dom';
+
+
+import * as actionTypes from '../store/burgerBuilderActions';
 
 
 
@@ -30,7 +34,9 @@ class ContactData extends React.Component{
         }
         axios.post('/orders.json',orderDetails).then(response=>{
                  console.log(response);
-        })
+        });
+        this.props.resetPrice();
+        this.props.history.replace('/');
 
             
     }
@@ -85,7 +91,9 @@ const mapStateToProps=state=>{
 }
 
 const mapDispatchToProps=dispatch=>{
-    return {}
+    return {
+        resetPrice:()=>dispatch(actionTypes.resetPrice())
+    }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(ContactData);
+export default connect(mapStateToProps,mapDispatchToProps)(withRouter(ContactData));

@@ -35,3 +35,36 @@ export const initIngredients=()=>{
         })
     }
 }
+
+
+
+export const resetPrice=()=>{
+    return {
+        type:actionTypes.RESET_PRICE
+    }
+}
+
+
+export const sendOrders=(orders)=>{
+    console.log(orders);
+    return {
+        type:actionTypes.FETCH_ORDERS,
+        orders:orders
+    }
+}
+
+export const fetchOrders=()=>{
+    return dispatch=>{
+        axios.get('/orders.json').then(response=>{
+            dispatch(sendOrders(response.data))
+        })
+    }
+}
+
+
+export const clearIngredients=()=>{
+    console.log('action creators');
+    return {
+        type:actionTypes.CLEAR_INGREDIENTS
+    }
+}

@@ -12,7 +12,8 @@ const INGREDIENTS_PRICES = {
 const initialState={
     ingredients:null,
     totalPrice:4,
-    maximumCustomisable:0
+    maximumCustomisable:0,
+    orders:null
 }
 
 const reducer=(state=initialState,action)=>{
@@ -44,6 +45,23 @@ const reducer=(state=initialState,action)=>{
                 ...state,
                 ingredients:action.ingredients
             }
+        case actionTypes.FETCH_ORDERS:
+            return {
+                ...state,
+                orders:action.orders
+            }
+        case actionTypes.RESET_PRICE:
+            return {
+                ...state,
+                totalPrice:4
+            }
+        case actionTypes.CLEAR_INGREDIENTS:
+            console.log('reducer');
+                return {
+                    ...state,
+                    ingredients:null,
+                    maximumCustomisable:0
+                }
         default:
             return state
     }

@@ -3,6 +3,7 @@ import CheckoutSummary from '../../components/order/checkoutSummary/checkoutSumm
 import ContactData from './contactData';
 import { Route } from 'react-router-dom';
 import {connect} from 'react-redux';
+import * as actionTypes from '../store/burgerBuilderActions';
 
 class CheckOut extends React.Component{
     // state={
@@ -26,10 +27,17 @@ class CheckOut extends React.Component{
     checkOutCancelled=()=>{
         this.props.history.goBack();
     }
+
+
     checkOutContinued=()=>{
         console.log('checkout');
         this.props.history.push('/checkout/contact');
     }
+
+
+
+   
+
     render(){
         return (
             <div>

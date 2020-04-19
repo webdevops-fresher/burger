@@ -95,6 +95,7 @@ class BurgerBuilder extends Component {
 
 
     componentDidMount(){
+        this.props.clearIngredients();
         this.props.fetchIngredients();
     }
 
@@ -106,7 +107,8 @@ class BurgerBuilder extends Component {
         for (let key in disabledLessButtons) {
             disabledLessButtons[key] = disabledLessButtons[key] <= 0
         }
-        let content=this.props.ings!=null?( <div><Modal show={this.state.orderNowClicked} revertOrder={this.revertOrderHandler}>
+        let content=this.props.ings!=null?
+        ( <div><Modal show={this.state.orderNowClicked} revertOrder={this.revertOrderHandler}>
             <OrderSummary ingredients={this.props.ings} cancelOrder={this.revertOrderHandler} 
             proceedOrder={this.proceedOrderhandler}
             price={this.state.totalPrice}/>
@@ -142,7 +144,8 @@ const mapDispatchToProps=dispatch=>{
     return {
         onIngredientAdded:(ingName)=>dispatch(burgerBuilderActions.addIngredient(ingName)),
         onIngredientRemoved:(ingName)=>dispatch(burgerBuilderActions.removeIngredient(ingName)),
-        fetchIngredients:()=>dispatch(burgerBuilderActions.initIngredients())
+        fetchIngredients:()=>dispatch(burgerBuilderActions.initIngredients()),
+        clearIngredients:()=>dispatch(burgerBuilderActions.clearIngredients())
     }
 }
 
